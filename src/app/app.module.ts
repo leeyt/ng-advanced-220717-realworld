@@ -1,4 +1,5 @@
-import { HttpClientModule } from '@angular/common/http';
+import { ApiInterceptor } from './api.interceptor';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
@@ -16,7 +17,13 @@ import { LayoutModule } from './layout/layout.module';
     AppRoutingModule,
     LayoutModule
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: ApiInterceptor,
+      multi: true,
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
