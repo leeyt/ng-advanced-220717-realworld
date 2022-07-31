@@ -2,9 +2,10 @@
   <div class="container page">
     <div class="row">
       <div class="col-md-10 col-md-offset-1 col-xs-12">
-        <form>
+        <form (ngSubmit)="onSubmit(createForm)" [formGroup]="createForm">
           <fieldset class="form-group">
             <input
+              formControlName="title"
               class="form-control form-control-lg"
               type="text"
               placeholder="Post Title"
@@ -12,6 +13,7 @@
           </fieldset>
           <fieldset class="form-group">
             <textarea
+              formControlName="description"
               class="form-control"
               rows="3"
               placeholder="Description"
@@ -19,22 +21,19 @@
           </fieldset>
           <fieldset class="form-group">
             <textarea
+              formControlName="body"
               class="form-control"
               rows="8"
               placeholder="Post body"
             ></textarea>
           </fieldset>
           <fieldset class="form-group">
-            <input class="form-control" type="text" placeholder="Enter tags" />
+            <input #mTag class="form-control" type="text" placeholder="Enter tags"
+              (keyup.enter)="addTag(mTag.value)"
+              (keyup.enter)="mTag.value = ''" />
             <div class="tag-list">
-              <span class="label label-pill label-default">
-                <i class="ion-close-round"></i> programming</span
-              >
-              <span class="label label-pill label-default">
-                <i class="ion-close-round"></i> javascript</span
-              >
-              <span class="label label-pill label-default">
-                <i class="ion-close-round"></i> webdev</span
+              <span class="label label-pill label-default" *ngFor="let tag of createForm.controls.tags.value; let i = index">
+                <i class="ion-close-round" (click)="removeTag(i)"></i> {{ tag }}</span
               >
             </div>
           </fieldset>
