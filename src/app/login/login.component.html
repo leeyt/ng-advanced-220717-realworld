@@ -5,17 +5,25 @@
       <div class="col-md-6 col-md-offset-3 col-xs-12">
         <h1 class="text-xs-center">Sign in</h1>
 
-        <form (ngSubmit)="login()">
+        <form #mForm="ngForm" (ngSubmit)="login()" [class.has-danger]="mForm.touched && mForm.invalid">
           <fieldset class="form-group">
             <input #mEmail="ngModel" name="email" class="form-control form-control-lg"
               type="text" placeholder="Email"
-              [(ngModel)]="user.email">
+              [(ngModel)]="user.email" required email>
+            <div *ngIf="mEmail.dirty && mEmail.invalid">
+              <span *ngIf="mEmail.errors?.['required']">* 請輸入Email</span>
+              <span *ngIf="mEmail.errors?.['email']">* Email格式不正確</span>
+            </div>
           </fieldset>
           <fieldset class="form-group">
             <input #mPassword="ngModel" name="password" class="form-control form-control-lg" type="password" placeholder="Password"
-              [(ngModel)]="user.password">
+              [(ngModel)]="user.password" required minlength="4">
+            <div *ngIf="mPassword.dirty && mPassword.invalid">
+              <span *ngIf="mPassword.errors?.['required']">* 請輸入密碼</span>
+              <span *ngIf="mPassword.errors?.['minlength']">* 密碼長度太短</span>
+            </div>
           </fieldset>
-          <button class="btn btn-lg btn-primary pull-xs-right">
+          <button class="btn btn-lg btn-primary pull-xs-right" [disabled]="mForm.invalid">
             Sign in
           </button>
         </form>
