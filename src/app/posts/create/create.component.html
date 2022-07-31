@@ -10,6 +10,9 @@
               type="text"
               placeholder="Post Title"
             />
+            <div *ngIf="createForm.controls.title.invalid && createForm.controls.title.errors">
+              <span *ngIf="createForm.controls.title.errors['required']">請輸入標題</span>
+            </div>
           </fieldset>
           <fieldset class="form-group">
             <textarea
@@ -26,6 +29,10 @@
               rows="8"
               placeholder="Post body"
             ></textarea>
+            <div *ngIf="createForm.controls.body.invalid && createForm.controls.body.errors">
+              <span *ngIf="createForm.controls.body.errors['required']">請輸入內文</span>
+              <span *ngIf="createForm.controls.body.errors['minlength']">內文長度不合</span>
+            </div>
           </fieldset>
           <fieldset class="form-group">
             <input #mTag class="form-control" type="text" placeholder="Enter tags"
@@ -37,7 +44,7 @@
               >
             </div>
           </fieldset>
-          <button type="submit" class="btn btn-lg btn-primary pull-xs-right">
+          <button type="submit" class="btn btn-lg btn-primary pull-xs-right" [disabled]="createForm.invalid">
             Create Post
           </button>
         </form>

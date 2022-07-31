@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   templateUrl: './create.component.html',
@@ -8,9 +8,9 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 export class CreateComponent implements OnInit {
 
   createForm = this.fb.group({
-    title: this.fb.control(''),
+    title: this.fb.control('', Validators.required),
     description: this.fb.control(''),
-    body: this.fb.control(''),
+    body: this.fb.control('', [Validators.required, Validators.minLength(10)]),
     tags: this.fb.array([
       // this.fb.control('HTML'),
       // this.fb.control('CSS'),
